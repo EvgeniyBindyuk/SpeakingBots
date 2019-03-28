@@ -3,4 +3,4 @@
 .out
 /*.xml
 target/
-.gitignorerr
+.gitignore
