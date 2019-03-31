@@ -1,56 +1,54 @@
 package actions;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import settings.WebDriverSettings;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Browser extends WebDriverSettings {
+
+    private ChromeDriver driver;
+
+    {
+        driver = new ChromeDriver();
+    }
 
     public void openMail() {
         driver.navigate().to("https://www.google.com/gmail/");
     }
 
     public void fillForm(String email, String password) {
-        driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         //email
         driver.findElement(By.cssSelector("div#view_container div.Xb9hP input")).sendKeys(email);
         driver.findElement(By.cssSelector("#identifierNext span")).click();
         //password
         driver.findElement(By.cssSelector("div.Xb9hP input[type=\"password\"]")).sendKeys(password);
-        driver.findElement(By.cssSelector("div[id=\"passwordNext\"] content span")).click();
+        driver.findElement(By.cssSelector("div[id=\"passwordNext\"]")).click();
     }
 
-    public void firstMessage(String email) {
+    public void startDialog(ArrayList<String> messages) {
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        String parentHandle = driver.getWindowHandle();
-        driver.findElement(By.cssSelector("div[class=\"T-I J-J5-Ji T-I-KE L3\"]")).click();
-
-        for (String childHandle : driver.getWindowHandles()) {
-            if (!childHandle.equals(parentHandle)) {
-                driver.switchTo().window(childHandle);
-            }
-        }
-        driver.findElement(By.cssSelector("div[class=\"wO nr l1\"] textarea")).click();
-        driver.findElement(By.cssSelector("div[class=\"wO nr l1\"] textarea")).sendKeys(email);
-        driver.findElement(By.cssSelector("div[class=\"wO nr l1\"] textarea")).submit();
-        driver.findElement(By.cssSelector("div[role=\"textbox\"]")).click();
-        driver.findElement(By.cssSelector("div[role=\"textbox\"]")).sendKeys("Привет женя, я тупой бот");
-        driver.findElement(By.cssSelector("td[class=\"gU Up\"] div[role=\"button\"]")).click();
-
-        driver.switchTo().window(parentHandle);
-    }
-
-    public void startDialog(int countMessages) {
-        for (int i = 0; i < countMessages; i++) {
-            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-            driver.findElement(By.xpath("//div[@class=\"aim ain\"]//div[@class=\"bsU\" and contains(text(), \"1\")]"));
-            List<WebElement> elements = driver.findElements(By.cssSelector("tr[tabindex=\"-1\"]"));
-            elements.get(0).click();
-            driver.findElement(By.cssSelector("table[role=\"presentation\"] span[id=\":9b\"]")).click();
-            driver.findElement(By.cssSelector("div[aria-label=\"Тело письма\"]")).sendKeys("gbc.y");
-            driver.findElement(By.cssSelector("div[id=\":sb\"]")).click();
+        driver.switchTo().frame(driver.findElement(By.cssSelector("iframe[id*=\"wblh0\"]")));
+        driver.findElement(By.cssSelector("button[title=\"Новый чат\"]")).click();
+        driver.switchTo().defaultContent();
+        driver.switchTo().frame(driver.findElement(By.cssSelector("iframe[id$=\"-1\"]")));
+        driver.findElement(By.cssSelector("div[class=\"Jv\"]")).click();
+        driver.switchTo().defaultContent();
+        driver.findElement(By.cssSelector("iframe.a7A"));
+        List<WebElement> elements = driver.findElements(By.cssSelector("iframe.a7A"));
+        if (elements.size() > 1) {
+            driver.switchTo().frame(elements.get(1));
+        } else driver.switchTo().frame(elements.get(0));
+        WebElement element = driver.findElement(By.cssSelector("div[role=\"textbox\"]"));
+        element.sendKeys("привет");
+        for (String message : messages) {
+            element.sendKeys(message);
+            element.sendKeys(Keys.ENTER);
         }
     }
 }

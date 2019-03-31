@@ -1,10 +1,12 @@
 import actions.Browser;
+import actions.Messages;
 
 class Bot {
 
     private String email;
     private String password;
     private Browser browser = new Browser();
+    private Messages base = new Messages();
 
     Bot(String email, String password) {
         this.email = email;
@@ -19,12 +21,8 @@ class Bot {
         browser.fillForm(email, password);
     }
 
-    void firstMessage(String email) {
-        browser.firstMessage(email);
-    }
-
-    void startDialog(int countMessages) {
-        browser.startDialog(countMessages);
+    void startDialog() {
+        browser.startDialog(base.messagesOne);
     }
 
 
