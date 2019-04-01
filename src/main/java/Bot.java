@@ -21,8 +21,8 @@ class Bot {
         browser.fillForm(email, password);
     }
 
-    void startDialog() {
-        browser.startDialog(base.messagesOne);
+    void startDialog(String name) {
+        browser.startDialog(base.messagesOne, name);
     }
 
 

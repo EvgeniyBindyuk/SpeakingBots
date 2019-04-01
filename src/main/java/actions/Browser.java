@@ -5,6 +5,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import settings.WebDriverSettings;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -31,7 +32,8 @@ public class Browser extends WebDriverSettings {
         driver.findElement(By.cssSelector("div[id=\"passwordNext\"]")).click();
     }
 
-    public void startDialog(ArrayList<String> messages) {
+    @SuppressWarnings("all")
+    public void startDialog(ArrayList<String> messages, String name) {
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.switchTo().frame(driver.findElement(By.cssSelector("iframe[id*=\"wblh0\"]")));
         driver.findElement(By.cssSelector("button[title=\"Новый чат\"]")).click();
@@ -46,7 +48,11 @@ public class Browser extends WebDriverSettings {
         } else driver.switchTo().frame(elements.get(0));
         WebElement element = driver.findElement(By.cssSelector("div[role=\"textbox\"]"));
         element.sendKeys("привет");
+        element.sendKeys(Keys.ENTER);
         for (String message : messages) {
+            List<WebElement> names = driver.findElements(By.xpath("(//span[text() = \"" + name + "\"])"));
+            driver.findElement(By.xpath("(//span[text() = \"" + name + "\"])[" + (names.size() + 1) + "]"));
+
             element.sendKeys(message);
             element.sendKeys(Keys.ENTER);
         }
