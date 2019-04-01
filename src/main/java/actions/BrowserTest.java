@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import settings.WebDriverSetTwo;
 import settings.WebDriverSettings;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings("all")
-public class BrowserTest extends WebDriverSettings {
+public class BrowserTest extends WebDriverSetTwo {
 
     private ChromeDriver driver;
 
@@ -38,16 +39,16 @@ public class BrowserTest extends WebDriverSettings {
         driver.switchTo().frame(driver.findElement(By.cssSelector("iframe[id*=\"wblh0\"]")));
         driver.findElement(By.cssSelector("div[aria-label*=\"Чат со следующими пользователями\"]"));
         driver.findElement(By.cssSelector("div[aria-label*=\"Чат со следующими пользователями\"]")).click();
-        driver.switchTo().defaultContent();
+        //driver.switchTo().defaultContent();
         //driver.switchTo().frame(driver.findElement(By.cssSelector("iframe[id$=\"-1\"]")));
         //driver.findElement(By.cssSelector("div[class=\"Jv\"]")).click();
-        //driver.switchTo().defaultContent();
-        driver.findElement(By.cssSelector("iframe.a7A"));
-        List<WebElement> elements = driver.findElements(By.cssSelector("iframe.a7A"));
-        if (elements.size() > 1) {
-            driver.switchTo().frame(elements.get(1));
-        } else driver.switchTo().frame(elements.get(0));
-        WebElement element = driver.findElement(By.cssSelector("div[role=\"textbox\"]"));
+        driver.switchTo().defaultContent();
+        driver.findElement(By.cssSelector("(//iframe[@class=\"a7A\"])[2]"));
+
+        driver.switchTo().frame(driver.findElement(By.cssSelector("(//iframe[@class=\"a7A\"])[2]")));
+
+        WebElement element = driver.findElement(By.cssSelector("iframe[class=\"a7A\"] div[role=\"textbox\"]"));
+        element.click();
         element.sendKeys("привет");
         element.sendKeys(Keys.ENTER);
         for (String message : messages) {
