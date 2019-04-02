@@ -1,18 +1,20 @@
+import bot.Bot;
+import bot.BotThread;
 
 public class Main {
-
     public static void main(String[] args) {
-        Bot botOne = new Bot("speakingbotone@gmail.com", "2613874qq");
-        BotTwo botTwo = new BotTwo("evganiy@gmail.com", "inspiron7720rR");
-
-        botOne.openGmail();
-        botTwo.openGmail();
-
-        botOne.fillForm();
-        botTwo.fillForm();
-
-        botOne.startDialog("AAA");
-        botTwo.startDialog("BotOne");
+        Bot botOne = new Bot(
+                "speakingbotone@gmail.com",
+                "2613874qq",
+                "AAA"
+        );
+        Bot botTwo = new Bot(
+                "evganiy@gmail.com",
+                "inspiron7720rR",
+                "BotOne"
+        );
+        new BotThread(botOne).start();
+        new BotThread(botTwo).start();
     }
 
 }
