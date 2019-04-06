@@ -2,17 +2,17 @@ package bot;
 
 public class BotThread extends Thread {
 
-    private Bot botThread;
+    private Bot bot;
 
-    public BotThread(Bot botThread) {
-        this.botThread = botThread;
+    public BotThread(Bot bot) {
+        this.bot = bot;
     }
 
     @Override
     public void run() {
-        botThread.openGmail();
-        botThread.logIn();
-        botThread.talk();
+        bot.openGmail();
+        bot.logIn();
+        bot.talk();
     }
 
 
