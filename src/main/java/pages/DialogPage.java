@@ -5,12 +5,13 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import text.Messages;
+
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class DialogPage {
 
     private WebDriver driver;
-
 
     private By buddyListFrame = By.cssSelector("iframe[id*=\"wblh0\"]");
     private By newChatButton = By.cssSelector("button[title=\"Новый чат\"]");
@@ -39,9 +40,11 @@ public class DialogPage {
             driver.switchTo().frame(elements.get(1));
         } else driver.switchTo().frame(elements.get(0));
         WebElement element = driver.findElement(dialogTextbox);
-        element.sendKeys("привет");
-        element.sendKeys(Keys.ENTER);
-        for (String message : Messages.messagesList) {
+
+
+//        element.sendKeys("привет");
+//        element.sendKeys(Keys.ENTER);
+        for (String message : Messages.abc) {
             List<WebElement> names = driver.findElements(
                     By.xpath("(//span[text() = \"" + botTwoName + "\"])")
             );

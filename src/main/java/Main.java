@@ -1,6 +1,5 @@
 import bot.Bot;
 import bot.BotThread;
-
 import java.util.Map;
 
 public class Main {
