@@ -4,7 +4,7 @@ import pages.DialogPage;
 import pages.LoginPage;
 import settings.WebDriverSettings;
 
-public class Bot extends WebDriverSettings implements IBot {
+public class Bot extends WebDriverSettings implements IBot, Runnable {
 
     private String email;
     private String password;
@@ -30,5 +30,12 @@ public class Bot extends WebDriverSettings implements IBot {
     public void talk() {
         dialogpage.newChat();
         dialogpage.startDialog(botTwoName);
+    }
+
+    @Override
+    public void run() {
+        openGmail();
+        logIn();
+        talk();
     }
 }

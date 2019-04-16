@@ -5,9 +5,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import text.Messages;
-
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class DialogPage {
 
@@ -41,17 +39,14 @@ public class DialogPage {
         } else driver.switchTo().frame(elements.get(0));
         WebElement element = driver.findElement(dialogTextbox);
 
-
-//        element.sendKeys("привет");
-//        element.sendKeys(Keys.ENTER);
-        for (String message : Messages.abc) {
+        for (int i = 0; i < Messages.abc.size(); i++) {
             List<WebElement> names = driver.findElements(
                     By.xpath("(//span[text() = \"" + botTwoName + "\"])")
             );
             driver.findElement(
                     By.xpath("(//span[text() = \"" + botTwoName + "\"])[" + (names.size() + 1) + "]")
             );
-            element.sendKeys(message);
+            element.sendKeys(Messages.abc.poll());
             element.sendKeys(Keys.ENTER);
         }
     }
